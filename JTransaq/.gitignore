@@ -2,5 +2,7 @@
 .settings/
 .classpath
 target/
-bin/
+/bin/
 build/
+JTransaq_wrap.cxx
+JTransaq_wrap.h
