@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="JTransaq" default="dist" basedir=".">
+  <property name="src" location="src/main/java" />
+  <property name="generate-tstamp" location="${src}/generated.ts" />
+  <property name="swig-file" location="JTransaq.i" />
+  <property name="output-name" value="JTransaq_wrap" />
+  <property name="output-cxx" location="${output-name}.cxx" />
+  <property name="output-h" location="${output-name}.h" />
+  <property name="package-name" value="ru.prolib.JTransaq" />
+  <property name="package-dir" location="${src}/ru/prolib/JTransaq" />
+  <property name="dll64-src" location="x64/Release/JTransaq.dll" />
+  <property name="dll64-dst" location="resources/lib/win64/JTransaq64.dll" />
+  <property environment="env" />
+
+  <target name="isGenerateReq" >
+    <uptodate srcfile="${swig-file}" targetfile="${generate-tstamp}" property="generate.notReq" />
+  </target>
+
+  <target name="generate-code" depends="init,isGenerateReq" unless="${generate.notReq}">
+    <echo>In order to function correctly, please ensure the following environment variables are correctly set:</echo>
+    <echo>JAVA_INCLUDE: ${env.JAVA_INCLUDE}</echo>
+    <echo>JAVA_BIN: ${env.JAVA_BIN}</echo>
+    <exec executable="swig" failonerror="true">
+      <arg value="-c++" />
+      <arg value="-java" />
+      <!--arg value="-I../include" /-->
+      <arg line="-package ${package-name}" />
+      <arg line="-outdir ${package-dir}" />
+      <arg line="-o ${output-cxx}" />
+      <arg value="${swig-file}" />
+    </exec>
+  </target>
+
+  <target name="clean" depends="init">
+    <delete includeEmptyDirs="true" verbose="yes">
+      <file file="${output-cxx}" />
+      <file file="${output-h}" />
+      <file file="${package-dir}/JTRansaq.java" />
+      <file file="${package-dir}/JTRansaqHandler.java" />
+      <file file="${package-dir}/JTRansaqJNI.java" />
+      <file file="${package-dir}/JTRansaqServer.java" />
+      <file file="${dll64-dst}" />
+    </delete>
+  </target>
+
+  <target name="init" >
+    <tstamp />
+    <mkdir dir="${package-dir}" />
+  </target>
+
+  <!-- target name="dist" depends="install" / -->
+
+</project>
