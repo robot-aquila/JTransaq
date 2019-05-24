@@ -2,6 +2,7 @@
 #include "Conv.h"
 #include "DLL.h"
 #include <Windows.h>
+#include <iostream>
 
 #ifndef JTRANSAQ_MODULE_NAME
 #define JTRANSAQ_MODILE_NAME "JTransaq64.dll"
@@ -31,7 +32,7 @@ JTransaqServer::JTransaqServer(JTransaqHandler* p_handler)
 {
 	shared_ptr<CDLL> lib = make_shared<CDLL>(replace_mod(L"txmlconnector64.dll"));
 	wrapper = make_shared<CTransaqWrapper>(lib);
-	if (!wrapper->SetCallbackEx(JTransaqServer::Callback, this)) {
+	if (!wrapper->SetCallbackEx(JTransaqServer::CallbackEx, static_cast<void*>(this))) {
 		throw std::exception("Error setting callback function");
 	}
 }
@@ -54,9 +55,17 @@ void JTransaqServer::SetLogLevel(int logLevel)
 
 void JTransaqServer::SendCommand(const wstring &data)
 {
+	static string success_tpl("<result success=\"true\"/>");
 	string x = TO_UTF8(data);
 	BYTE* p_str = wrapper->SendCommand((BYTE*)x.c_str());
-	JTRANSAQ_RETURN_VOID(p_str);
+	if (p_str == 0) {
+		throw std::exception("Unexpected null response");
+	}
+	string result((const char*)p_str);
+	wrapper->FreeMemory(p_str);
+	if (result != success_tpl) {
+		throw std::exception(result.c_str());
+	}
 }
 
 
@@ -73,7 +82,7 @@ JTransaqServer::~JTransaqServer()
 }
 
 
-bool JTransaqServer::Callback(BYTE* p_data, void* p_void)
+bool JTransaqServer::CallbackEx(BYTE* p_data, void* p_void)
 {
 	if (!p_void || !p_data) {
 		return false;
@@ -83,3 +92,4 @@ bool JTransaqServer::Callback(BYTE* p_data, void* p_void)
 	p_server->wrapper->FreeMemory(p_data);
 	return p_server->handler->Handle(data);
 }
+

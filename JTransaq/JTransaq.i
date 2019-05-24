@@ -12,5 +12,13 @@
 	}
 %}
 
+%feature("director") JTransaqHandler; 
+%typemap(throws, throws="Exception") std::exception, exception {
+    jclass exClass = jenv->FindClass("java/lang/Exception");
+    if (exClass)
+        jenv->ThrowNew(exClass, $1.what());
+    return $null;
+}
+
 %include "JTransaqHandler.h"
 %include "JTransaqServer.h"

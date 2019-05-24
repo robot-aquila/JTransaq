@@ -38,6 +38,7 @@
       <file file="${package-dir}/JTRansaqJNI.java" />
       <file file="${package-dir}/JTRansaqServer.java" />
     </delete>
+	<delete includeEmptyDirs="true" verbose="yes" dir="bin" />
   </target>
 
   <target name="init" >

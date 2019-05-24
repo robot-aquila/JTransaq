@@ -77,7 +77,7 @@
   <ItemGroup>
     <CustomBuild Include="JTransaq.i">
       <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ant generate-code</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ant clean generate-code</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JTransaq_wrap.cxx;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>

@@ -16,21 +16,31 @@ public class JTransaqTest {
 
 	@Before
 	public void setUp() throws Exception {
+		deleteDir(new File("bin"));
 		LOG_DIR = Files.createTempDirectory("jtransaq-test-" + System.currentTimeMillis()).toFile();
 		LOG_DIR.mkdirs();
 	}
 	
 	@After
 	public void tearDown() throws Exception {
-		Files.walk(LOG_DIR.toPath())
-	    	.sorted(Comparator.reverseOrder())
-	    	.map(Path::toFile)
-	    	.forEach(File::delete);
-		LOG_DIR.delete();
+		deleteDir(LOG_DIR);
+	}
+	
+	static void deleteDir(File path) throws Exception {
+		if ( ! path.exists() ) {
+			System.out.println("Nothing to do with directory: " + path.getAbsolutePath());
+			return;
+		}
+		Files.walk(path.toPath())
+    		.sorted(Comparator.reverseOrder())
+    		.map(Path::toFile)
+    		.forEach(File::delete);
+		path.delete();
+		System.out.println("Directory cleared: " + path.getAbsolutePath());
 	}
 
 	@Test
-	public void test() {
+	public void test() throws Exception {
 		JTransaqHandler handler = new JTransaqHandler() {
 			
 			@Override

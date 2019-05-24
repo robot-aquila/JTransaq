@@ -17,7 +17,8 @@ public:
 	virtual void UnInitialize() throw (exception);
 	virtual ~JTransaqServer();
 private:
-	static bool Callback(BYTE* p_data, void* p_void);
+	static bool CallbackEx(BYTE* p_data, void* p_void);
+
 	shared_ptr<CTransaqWrapper> wrapper;
 	JTransaqHandler* handler;
 };
