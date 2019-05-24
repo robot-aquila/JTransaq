@@ -27,9 +27,6 @@
     <ClInclude Include="JTransaqHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TransaqHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="JTransaqServer.h">
       <Filter>Header Files</Filter>
     </ClInclude>

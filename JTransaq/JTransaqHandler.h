@@ -1,14 +1,13 @@
 #pragma once
 #include <string>
-#include "TransaqHandler.h"
 
 using namespace std;
 
-class JTransaqHandler : public CTransaqHandler
+class JTransaqHandler
 {
 public:
-	JTransaqHandler() : CTransaqHandler() { }
-	virtual bool Handle(const wstring& data) override { return false; }
+	JTransaqHandler() { }
+	virtual bool Handle(const wstring& data) { return false; }
 	virtual ~JTransaqHandler() { }
 };
 

@@ -8,8 +8,6 @@
   <property name="output-h" location="${output-name}.h" />
   <property name="package-name" value="ru.prolib.JTransaq" />
   <property name="package-dir" location="${src}/ru/prolib/JTransaq" />
-  <property name="dll64-src" location="x64/Release/JTransaq.dll" />
-  <property name="dll64-dst" location="resources/lib/win64/JTransaq64.dll" />
   <property environment="env" />
 
   <target name="isGenerateReq" >
@@ -39,7 +37,6 @@
       <file file="${package-dir}/JTRansaqHandler.java" />
       <file file="${package-dir}/JTRansaqJNI.java" />
       <file file="${package-dir}/JTRansaqServer.java" />
-      <file file="${dll64-dst}" />
     </delete>
   </target>
 

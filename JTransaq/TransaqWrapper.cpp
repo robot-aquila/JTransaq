@@ -20,6 +20,7 @@ CTransaqWrapper::~CTransaqWrapper()
 
 }
 
+
 int CTransaqWrapper::GetServiceInfo(const BYTE* request, BYTE** response)
 {
 	return FNPA(GET_SERVICE_INFO)(request, response);
