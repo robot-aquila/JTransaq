@@ -38,22 +38,40 @@ public class JTransaqTest {
 		path.delete();
 		System.out.println("Directory cleared: " + path.getAbsolutePath());
 	}
+	
+	static class XHandler extends JTransaqHandler {
+		@Override
+		public boolean Handle(String data) {
+			System.out.println("IN> " + data);
+			return true;
+		}
+	}
 
 	@Test
-	public void test() throws Exception {
-		JTransaqHandler handler = new JTransaqHandler() {
-			
-			@Override
-			public boolean Handle(String data) {
-				System.out.println("IN> " + data);
-				return true;
-			}
-
-		};
+	public void test1() throws Exception {
+		XHandler handler = new XHandler();
 		JTransaqServer server = new JTransaqServer(handler);
 		//System.out.println("LOG_DIR=" + LOG_DIR);
 		server.Initialize(LOG_DIR.getAbsolutePath(), 2);
 		server.UnInitialize();
+	}
+	
+	@Test
+	public void test2() throws Exception {
+		XHandler handler = new XHandler();
+		JTransaqServer server = new JTransaqServer(handler);
+		try {
+			server.Initialize("zulu\\charlie", 2);
+			fail("Expected exception: " + Exception.class.getSimpleName());
+		} catch ( Exception e ) {
+			String expected = new StringBuilder()
+					.append("<error>")
+					.append("Не удалось инициализировать библиотеку. ")
+					.append("Указанный путь не существует")
+					.append("</error>")
+					.toString();
+			assertEquals(expected, e.getMessage());
+		}
 	}
 
 }
