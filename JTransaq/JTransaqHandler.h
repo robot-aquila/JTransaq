@@ -13,7 +13,7 @@ public:
 
 	virtual bool Handle(const wstring& data)
 	{
-		cout << "JTransaqHandler::Handle(const wstring&) called" << endl;
+		wcout << L"JTransaqHandler::Handle(const wstring&): " << data.substr(0, 32) << endl;
 		return false;
 	}
 
