@@ -26,5 +26,10 @@ pipeline {
                 bat 'mvn -B -f JTransaq test'
             }
         }
+        stage('Install') {
+            steps {
+                bat 'mvn -B -f JTransaq -DskipTests install'
+            }
+        }
     }
 }
