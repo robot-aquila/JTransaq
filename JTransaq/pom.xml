@@ -49,6 +49,31 @@
                     </filesets>
 			    </configuration>
 			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0-M3</version>
+                <executions>
+                    <execution>
+                        <id>enforce-dlls-exists</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireFilesExist>
+                                    <files>
+                                        <file>src/main/resources/bin/win/x64/txmlconnector64.dll</file>
+                                        <file>build/x64/Release/bin/win/x64/JTransaq64.dll</file>
+                                    </files>
+                                </requireFilesExist>
+                                <dependencyConvergence/>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+			
 		</plugins>
         
         <resources>
