@@ -24,7 +24,6 @@ pipeline {
         stage('Test.JAR') {
             steps {
                 bat 'mvn -B -f JTransaq test'
-                bat 'ant -f JTransaq/build.xml clean'
             }
         }
         stage('Install.JAR') {
