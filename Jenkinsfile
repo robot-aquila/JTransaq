@@ -33,10 +33,12 @@ pipeline {
             }
         }
         stage('Cleanup') {
-            bat 'chcp 850 && msbuild JTransaq.sln /t:Clean'
-            bat 'mvn -B -f JTransaq clean'
-            bat 'ant -f JTransaq/build.xml clean'
-            bat 'del /Q JTransaq\\src\\main\\resources\\bin\\win\\x64\\txmlconnector64.dll'
+            steps {
+                bat 'chcp 850 && msbuild JTransaq.sln /t:Clean'
+                bat 'mvn -B -f JTransaq clean'
+                bat 'ant -f JTransaq/build.xml clean'
+                bat 'del /Q JTransaq\\src\\main\\resources\\bin\\win\\x64\\txmlconnector64.dll'
+            }
         }
     }
 }
