@@ -2,9 +2,6 @@ pipeline {
     agent {
         label 'windows-msbuild'
     }
-    environment {
-        // VSLANG=1033 // does not work
-    }
     stages {
         stage('Prepare') {
             steps {
