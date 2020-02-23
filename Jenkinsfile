@@ -3,7 +3,7 @@ pipeline {
         label 'windows-msbuild'
     }
     environment {
-        VSLANG=1033
+        // VSLANG=1033 // does not work
     }
     stages {
         stage('Prepare') {
@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Build.DLL') {
             steps {
-                bat 'msbuild JTransaq/JTransaq.sln /t:Clean;Build /p:Configuration=Release'
+                bat 'msbuild JTransaq\JTransaq.sln /t:Clean;Build /p:Configuration=Release'
             }
         }
         stage('Build.JAR') {
