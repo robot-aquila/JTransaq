@@ -15,7 +15,8 @@ pipeline {
         }
         stage('Build.JAR') {
             steps {
-                unzip zipFile: 'src/main/resources/bin/win/x64/txmlconnector64.zip', dir: 'src/main/resources/bin/win/x64'
+                echo 'Check that pipeline-utility-steps Jenkins plugin is installed if you got failure at the next step'
+                unzip zipFile: 'JTransaq/src/main/resources/bin/win/x64/txmlconnector64.zip', dir: 'JTransaq/src/main/resources/bin/win/x64'
                 bat 'mvn -B -f JTransaq -DskipTests package'
                 bat 'jar -tf JTransaq/target/JTransaq-0.1.0.jar'
             }
