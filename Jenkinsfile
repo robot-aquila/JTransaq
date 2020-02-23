@@ -18,7 +18,6 @@ pipeline {
                 echo 'Check that pipeline-utility-steps Jenkins plugin is installed if you got failure at the next step'
                 unzip zipFile: 'JTransaq/src/main/resources/bin/win/x64/txmlconnector64.zip', dir: 'JTransaq/src/main/resources/bin/win/x64'
                 bat 'mvn -B -f JTransaq -DskipTests clean package'
-                bat 'del /Q JTransaq/src/main/resources/bin/win/x64/txmlconnector64.dll'
                 bat 'jar -tf JTransaq/target/JTransaq-0.1.0.jar'
             }
         }
@@ -28,10 +27,16 @@ pipeline {
                 bat 'ant -f JTransaq/build.xml clean'
             }
         }
-        stage('Install') {
+        stage('Install.JAR') {
             steps {
                 bat 'mvn -B -f JTransaq -DskipTests install'
             }
+        }
+        stage('Cleanup') {
+			bat 'chcp 850 && msbuild JTransaq.sln /t:Clean'
+            bat 'mvn -B -f JTransaq clean'
+            bat 'ant -f JTransaq/build.xml clean'
+			bat 'del /Q JTransaq\src\main\resources\bin\win\x64\txmlconnector64.dll'            
         }
     }
 }
