@@ -25,6 +25,11 @@ pipeline {
             steps {
                 bat 'mvn -B -f JTransaq test'
             }
+            post {
+                always {
+                    junit '**/target/surefire-reports/*.xml'
+                }
+            }
         }
         stage('Install.JAR') {
             steps {
