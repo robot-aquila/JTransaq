@@ -10,7 +10,8 @@ pipeline {
         }
         stage('Build.DLL') {
             steps {
-                bat 'msbuild %WORKSPACE%\\JTransaq\\JTransaq.sln /t:Clean;Build /p:Configuration=Release'
+                bat 'dir %WORKSPACE%'
+                bat 'msbuild JTransaq.sln /t:Clean;Build /p:Configuration=Release'
             }
         }
         stage('Build.JAR') {
